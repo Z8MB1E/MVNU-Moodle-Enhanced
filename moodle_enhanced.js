@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MVNU Moodle Enhanced™
 // @namespace    https://onyxsimple.com
-// @version      0.5.7
+// @version      0.5.9
 // @description  Provides a variety of enhancements to the MVNU Moodle experience.
 // @author       Jason Fraley (Z8MB1E)
 // @license      All Rights Reserved
@@ -356,6 +356,18 @@ function getCookie(cname) {
     .path-mod-assign td.submissionstatusdraft, .path-mod-assign div.submissionstatusdraft, .path-mod-assign a:link.submissionstatusdraft {
         background-color: #bbbb55;
     }
+    .fp-iconview .fp-filename-field .fp-filename {
+        background: none;
+    }
+    .fp-iconview .fp-thumbnail {
+        border: 1px solid #999;
+        border-radius: 10px;
+    }
+    .fp-iconview .fp-thumbnail img {
+        border: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
     `;
 
   var style = `    
@@ -373,6 +385,8 @@ function getCookie(cname) {
         border: 1px solid #373a3c;
         padding: 5px;
     }
+
+    / * END EDITOR TOOLS */
     `;
 
   Enhanced.log("Injecting objectively better CSS styling...");
@@ -407,6 +421,9 @@ function getCookie(cname) {
   // function fixEditorIssues() {
   //   if
   // }
+
+  // Auto-click on sidebar element to remove issue
+  $("a.list-group-item.activity-sections.active").click();
 
   /**========================================================================
    *                           DARK MODE FEATURE
