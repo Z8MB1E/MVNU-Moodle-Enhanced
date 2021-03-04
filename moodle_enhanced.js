@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MVNU Moodle Enhanced™
 // @namespace    https://onyxsimple.com
-// @version      0.4.9
+// @version      0.4.10
 // @description  Provides a variety of enhancements to the MVNU Moodle experience.
 // @author       Jason Fraley (Z8MB1E)
 // @license      All Rights Reserved
@@ -537,7 +537,9 @@ function getCookie(cname) {
 
   if (getCookie("enhanced_reviewNotify")) {
     var rand = (Math.round(Math.random() * 60) + 30) * 1000;
-    Enhanced.log("Leave a review notification will pop up in " + (rand / 1000) + " seconds.");
+    Enhanced.log(
+      "Leave a review notification will pop up in " + rand / 1000 + " seconds."
+    );
     var notify = setTimeout(function () {
       window.notifyToast = $.toast({
         text:
@@ -549,24 +551,27 @@ function getCookie(cname) {
       });
     }, rand);
   } else if (getCookie("enhanced_reviewNotify") == "false") {
-    Enhanced.log("Client followed feedback link, will not show review notification!");
+    Enhanced.log(
+      "Client followed feedback link, will not show review notification!"
+    );
   } else {
-    setCookie("enhanced_reviewNotify","true");
-    Enhanced.log("Detected missing review cookie, inserted cookie into browser.")
-  };
+    setCookie("enhanced_reviewNotify", "true");
+    Enhanced.log(
+      "Detected missing review cookie, inserted cookie into browser."
+    );
+  }
 
   window.wentToReview = function () {
     Enhanced.log("Client has followed feedback link!");
-    if (getCookie("enhanced_reviewNotify") == "true") {
-      setCookie("enhanced_reviewNotify","false");
-      window.notifyToast.update({
-        heading: 'Thank you!',
-        text: 'Thank you for leaving your feedback on MVNU Moodle Enhanced&trade;! I won\'t ask you again.',
-        icon: 'success',
-        hideAfter: 10000,
-      })
-    }
-  }
+    setCookie("enhanced_reviewNotify", "false");
+    window.notifyToast.update({
+      heading: "Thank you!",
+      text:
+        "Thank you for leaving your feedback on MVNU Moodle Enhanced&trade;! I won't ask you again.",
+      icon: "success",
+      hideAfter: 10000,
+    });
+  };
 
   /*--------------- END OF LEAVE A REVIEW --------------*/
 
