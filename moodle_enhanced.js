@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MVNU Moodle Enhanced™
 // @namespace    https://onyxsimple.com
-// @version      0.4.10
+// @version      0.5.0
 // @description  Provides a variety of enhancements to the MVNU Moodle experience.
 // @author       Jason Fraley (Z8MB1E)
 // @license      All Rights Reserved
@@ -56,6 +56,7 @@ function getCookie(cname) {
       this.log = function (msg) {
         console.log(`[Enhanced] ${msg}`);
       };
+
       this.toast = function (text, icon = "info", hideAfter = 5000) {
         $.toast({
           heading: "MVNU Moodle Enhanced&reg;",
@@ -65,6 +66,42 @@ function getCookie(cname) {
           loaderBg: "#9EC600", // To change the background
           hideAfter: hideAfter,
         });
+      };
+
+      this.toastRand = function (
+        chance = 50,
+        text,
+        icon = "info",
+        hideAfter = 5000
+      ) {
+        var rand = Math.round(Math.random() * 100);
+        if (rand <= chance) {
+          Enhanced.log(`Toast message displayed after ${rand} within ${chance}%.`);
+          this.toast(text, icon, hideAfter);
+        }
+      };
+
+      this.toastDelay = function (
+        delay = 30,
+        text,
+        icon = "info",
+        hideAfter = 5000
+      ) {
+        Enhanced.log(`A new toast message has been set to appear after a ${delay} second delay.`);
+        var delayedToast = setTimeout(this.toast(text, icon, hideAfter), delay * 1000);
+      };
+      
+      // Helper functions!
+      this.chance = function (chance = 50, callback) {
+        var rand = Math.round(Math.random() * 100);
+        if (rand <= chance) {
+          if (typeof callback == "function") {
+            Enhanced.log(`Chance succeeded with ${rand} within ${chance}%.`);
+            return callback();
+          } else {
+            console.error("Enhanced.chance is not returning a function!");
+          }
+        }
       };
     }
   }
@@ -574,6 +611,16 @@ function getCookie(cname) {
   };
 
   /*--------------- END OF LEAVE A REVIEW --------------*/
+
+  /**--------------------------------------------
+   *               REPORT AN ISSUE
+   *---------------------------------------------**/
+
+   Enhanced.chance(25, function() {
+    Enhanced.toastDelay(Math.round(Math.random() * 60) + 30, "Discovered an issue with this add-on? Report it on our <a href='https://github.com/Z8MB1E/MVNU-Moodle-Enhanced/issues'>issue tracker!</a>");
+   });
+
+  /*--------------- END OF REPORT AN ISSUE --------------*/
 
   // Add context menu
   $.contextMenu({
