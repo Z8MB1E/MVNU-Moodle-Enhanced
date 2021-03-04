@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MVNU Moodle Enhanced™
 // @namespace    https://onyxsimple.com
-// @version      0.5.2
+// @version      0.5.3
 // @description  Provides a variety of enhancements to the MVNU Moodle experience.
 // @author       Jason Fraley (Z8MB1E)
 // @license      All Rights Reserved
@@ -93,7 +93,9 @@ function getCookie(cname) {
           `A new toast message has been set to appear after a ${delay} second delay.`
         );
         var delayedToast = setTimeout(
-          this.toast(text, icon, hideAfter),
+          function() {
+            Enhanced.toast(text, icon, hideAfter);
+          },
           delay * 1000
         );
       };
