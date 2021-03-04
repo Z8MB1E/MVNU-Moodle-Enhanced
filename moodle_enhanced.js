@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MVNU Moodle Enhanced™
 // @namespace    https://onyxsimple.com
-// @version      0.5.3
+// @version      0.5.4
 // @description  Provides a variety of enhancements to the MVNU Moodle experience.
 // @author       Jason Fraley (Z8MB1E)
 // @license      All Rights Reserved
@@ -55,6 +55,12 @@ function getCookie(cname) {
     constructor() {
       this.log = function (msg) {
         console.log(`[Enhanced] ${msg}`);
+      };
+      this.warn = function (msg) {
+        console.warn(`[Enhanced] ${msg}`);
+      };
+      this.error = function (msg) {
+        console.error(`[Enhanced] ${msg}`);
       };
 
       this.toast = function (text, icon = "info", hideAfter = 5000) {
