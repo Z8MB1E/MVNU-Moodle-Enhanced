@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MVNU Moodle Enhanced™
 // @namespace    https://onyxsimple.com
-// @version      0.5.10
+// @version      0.5.11
 // @description  Provides a variety of enhancements to the MVNU Moodle experience.
 // @author       Jason Fraley (Z8MB1E)
 // @license      All Rights Reserved
@@ -423,8 +423,15 @@ function getCookie(cname) {
   // }
 
   // Auto-click on sidebar element to remove issue
-  setTimeout(() => {
-    $("a.list-group-item.activity-sections.active").click();
+  //todo  REFACTOR THIS FEATURE, NEEDS WORK 
+  setTimeout(function () {
+    if ($("a.list-group-item.activity-sections.active")) {
+      // $("a.list-group-item.activity-sections.active").click();
+      document.getElementsByClassName("list-group-item activity-sections active")[0].click(); // Raw Javascript function
+      Enhanced.log("Clicking on sidebar element. (Hopefully removes bug!)");
+    } else {
+      Enhanced.warn("Sidebar element not found!");
+    }
   }, 1500);
 
   /**========================================================================
