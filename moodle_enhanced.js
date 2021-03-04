@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MVNU Moodle Enhanced™
 // @namespace    https://onyxsimple.com
-// @version      0.5.0
+// @version      0.5.1
 // @description  Provides a variety of enhancements to the MVNU Moodle experience.
 // @author       Jason Fraley (Z8MB1E)
 // @license      All Rights Reserved
@@ -572,7 +572,7 @@ function getCookie(cname) {
    *               LEAVE A REVIEW
    *---------------------------------------------**/
 
-  if (getCookie("enhanced_reviewNotify")) {
+  if (getCookie("enhanced_reviewNotify") == "true") {
     var rand = (Math.round(Math.random() * 60) + 30) * 1000;
     Enhanced.log(
       "Leave a review notification will pop up in " + rand / 1000 + " seconds."
