@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MVNU Moodle Enhanced™
 // @namespace    https://onyxsimple.com
-// @version      0.4.8
+// @version      0.4.9
 // @description  Provides a variety of enhancements to the MVNU Moodle experience.
 // @author       Jason Fraley (Z8MB1E)
 // @license      All Rights Reserved
@@ -541,7 +541,7 @@ function getCookie(cname) {
     var notify = setTimeout(function () {
       window.notifyToast = $.toast({
         text:
-          "MVNU Moodle Enhanced&trade; is under constant development. Would you be so kind as to <a href='https://greasyfork.org/en/scripts/422185-mvnu-moodle-enhanced/feedback' onclick='window.wentToReview()' target='_blank'>leave some feedback?</a>",
+          "MVNU Moodle Enhanced&trade; is under constant development. Would you be so kind as to <a href='https://greasyfork.org/en/scripts/422185-mvnu-moodle-enhanced/feedback' onclick='return window.wentToReview();' target='_blank'>leave some feedback?</a>",
         heading: "Leave a comment!",
         icon: "warning",
         allowToastClose: true,
@@ -556,6 +556,7 @@ function getCookie(cname) {
   };
 
   window.wentToReview = function () {
+    Enhanced.log("Client has followed feedback link!");
     if (getCookie("enhanced_reviewNotify") == "true") {
       setCookie("enhanced_reviewNotify","false");
       window.notifyToast.update({
