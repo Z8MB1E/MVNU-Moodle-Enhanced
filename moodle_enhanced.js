@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MVNU Moodle Enhanced™
 // @namespace    https://onyxsimple.com
-// @version      0.5.1
+// @version      0.5.2
 // @description  Provides a variety of enhancements to the MVNU Moodle experience.
 // @author       Jason Fraley (Z8MB1E)
 // @license      All Rights Reserved
@@ -76,7 +76,9 @@ function getCookie(cname) {
       ) {
         var rand = Math.round(Math.random() * 100);
         if (rand <= chance) {
-          Enhanced.log(`Toast message displayed after ${rand} within ${chance}%.`);
+          Enhanced.log(
+            `Toast message displayed after ${rand} within ${chance}%.`
+          );
           this.toast(text, icon, hideAfter);
         }
       };
@@ -87,10 +89,15 @@ function getCookie(cname) {
         icon = "info",
         hideAfter = 5000
       ) {
-        Enhanced.log(`A new toast message has been set to appear after a ${delay} second delay.`);
-        var delayedToast = setTimeout(this.toast(text, icon, hideAfter), delay * 1000);
+        Enhanced.log(
+          `A new toast message has been set to appear after a ${delay} second delay.`
+        );
+        var delayedToast = setTimeout(
+          this.toast(text, icon, hideAfter),
+          delay * 1000
+        );
       };
-      
+
       // Helper functions!
       this.chance = function (chance = 50, callback) {
         var rand = Math.round(Math.random() * 100);
@@ -106,7 +113,7 @@ function getCookie(cname) {
     }
   }
 
-  var Enhanced = new EnhancedClass();
+  window.Enhanced = new EnhancedClass();
 
   var $ = window.jQuery;
 
@@ -616,9 +623,12 @@ function getCookie(cname) {
    *               REPORT AN ISSUE
    *---------------------------------------------**/
 
-   Enhanced.chance(25, function() {
-    Enhanced.toastDelay(Math.round(Math.random() * 60) + 30, "Discovered an issue with this add-on? Report it on our <a href='https://github.com/Z8MB1E/MVNU-Moodle-Enhanced/issues'>issue tracker!</a>");
-   });
+  Enhanced.chance(25, function () {
+    Enhanced.toastDelay(
+      Math.round(Math.random() * 60) + 30,
+      "Discovered an issue with this add-on? Report it on our <a href='https://github.com/Z8MB1E/MVNU-Moodle-Enhanced/issues'>issue tracker!</a>"
+    );
+  });
 
   /*--------------- END OF REPORT AN ISSUE --------------*/
 
