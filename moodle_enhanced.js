@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MVNU Moodle Enhanced™
 // @namespace    https://onyxsimple.com
-// @version      0.5.4
+// @version      0.5.5
 // @description  Provides a variety of enhancements to the MVNU Moodle experience.
 // @author       Jason Fraley (Z8MB1E)
 // @license      All Rights Reserved
@@ -98,12 +98,9 @@ function getCookie(cname) {
         Enhanced.log(
           `A new toast message has been set to appear after a ${delay} second delay.`
         );
-        var delayedToast = setTimeout(
-          function() {
-            Enhanced.toast(text, icon, hideAfter);
-          },
-          delay * 1000
-        );
+        var delayedToast = setTimeout(function () {
+          Enhanced.toast(text, icon, hideAfter);
+        }, delay * 1000);
       };
 
       // Helper functions!
@@ -634,7 +631,9 @@ function getCookie(cname) {
   Enhanced.chance(25, function () {
     Enhanced.toastDelay(
       Math.round(Math.random() * 60) + 30,
-      "Discovered an issue with this add-on? Report it on our <a href='https://github.com/Z8MB1E/MVNU-Moodle-Enhanced/issues'>issue tracker!</a>"
+      "Discovered an issue with this add-on? Report it on our <a href='https://github.com/Z8MB1E/MVNU-Moodle-Enhanced/issues'>issue tracker!</a>",
+      "info",
+      15000
     );
   });
 
