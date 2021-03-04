@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MVNU Moodle Enhanced™
 // @namespace    https://onyxsimple.com
-// @version      0.5.9
+// @version      0.5.10
 // @description  Provides a variety of enhancements to the MVNU Moodle experience.
 // @author       Jason Fraley (Z8MB1E)
 // @license      All Rights Reserved
@@ -423,7 +423,9 @@ function getCookie(cname) {
   // }
 
   // Auto-click on sidebar element to remove issue
-  $("a.list-group-item.activity-sections.active").click();
+  setTimeout(() => {
+    $("a.list-group-item.activity-sections.active").click();
+  }, 1500);
 
   /**========================================================================
    *                           DARK MODE FEATURE
