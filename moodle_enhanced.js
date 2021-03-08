@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MVNU Moodle Enhanced™
 // @namespace    https://onyxsimple.com
-// @version      0.6.0
+// @version      0.6.1
 // @description  Provides a variety of enhancements to the MVNU Moodle experience.
 // @author       Jason Fraley (Z8MB1E)
 // @license      All Rights Reserved
@@ -679,9 +679,9 @@ function getCookie(cname) {
       Math.round(Math.random() * 60) + 30,
       `Like what I've made? Please share it with your friends!
       <ul>
-      <a href="https://www.facebook.com/sharer/sharer.php?u=https://greasyfork.org/en/scripts/422185-mvnu-moodle-enhanced"><li>Share on Facebook</li></a>
-      <a href="https://twitter.com/intent/tweet?url=https://greasyfork.org/en/scripts/422185-mvnu-moodle-enhanced&text=Hey%20MVNU%20students!%20I've%20been%20using%20this%20really%20cool%20add-on%20for%20Moodle%20that%20adds%20Dark%20Mode.%20Give%20it%20a%20try!"><li>Share on Twitter</li></a>
-      <a href="https://pinterest.com/pin/create/button/?url=https://greasyfork.org/en/scripts/422185-mvnu-moodle-enhanced&media=&description=Hey%20MVNU%20students!%20I've%20been%20using%20this%20really%20cool%20add-on%20for%20Moodle%20that%20adds%20Dark%20Mode.%20Give%20it%20a%20try!"><li>Share on Pinterest</li></a>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https://greasyfork.org/en/scripts/422185-mvnu-moodle-enhanced" target="_blank"><li>Share on Facebook</li></a>
+      <a href="https://twitter.com/intent/tweet?url=https://greasyfork.org/en/scripts/422185-mvnu-moodle-enhanced&text=Hey%20MVNU%20students!%20I've%20been%20using%20this%20really%20cool%20add-on%20for%20Moodle%20that%20adds%20Dark%20Mode.%20Give%20it%20a%20try!" target="_blank"><li>Share on Twitter</li></a>
+      <a href="https://pinterest.com/pin/create/button/?url=https://greasyfork.org/en/scripts/422185-mvnu-moodle-enhanced&media=&description=Hey%20MVNU%20students!%20I've%20been%20using%20this%20really%20cool%20add-on%20for%20Moodle%20that%20adds%20Dark%20Mode.%20Give%20it%20a%20try!" target="_blank"><li>Share on Pinterest</li></a>
       </ul>`,
       "info",
       15000
