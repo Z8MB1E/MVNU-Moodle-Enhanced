@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MVNU Moodle Enhanced™
 // @namespace    https://onyxsimple.com
-// @version      0.6.2
+// @version      0.6.3
 // @description  Provides a variety of enhancements to the MVNU Moodle experience.
 // @author       Jason Fraley (Z8MB1E)
 // @license      All Rights Reserved
@@ -629,8 +629,7 @@ function getCookie(cname) {
     );
     var notify = setTimeout(function () {
       window.notifyToast = $.toast({
-        text:
-          "MVNU Moodle Enhanced&trade; is under constant development. Would you be so kind as to <a href='https://greasyfork.org/en/scripts/422185-mvnu-moodle-enhanced/feedback' onclick='return window.wentToReview();' target='_blank'>leave some feedback?</a>",
+        text: "MVNU Moodle Enhanced&trade; is under constant development. Would you be so kind as to <a href='https://greasyfork.org/en/scripts/422185-mvnu-moodle-enhanced/feedback' onclick='return window.wentToReview();' target='_blank'>leave some feedback?</a>",
         heading: "Leave a comment!",
         icon: "warning",
         allowToastClose: true,
@@ -653,8 +652,7 @@ function getCookie(cname) {
     setCookie("enhanced_reviewNotify", "false");
     window.notifyToast.update({
       heading: "Thank you!",
-      text:
-        "Thank you for leaving your feedback on MVNU Moodle Enhanced&trade;! I won't ask you again.",
+      text: "Thank you for leaving your feedback on MVNU Moodle Enhanced&trade;! I won't ask you again.",
       icon: "success",
       hideAfter: 10000,
     });
@@ -724,8 +722,7 @@ function getCookie(cname) {
         },
       },
       invertColorScheme: {
-        name:
-          "Invert Color Scheme<br/><span><small>Inverts colors of entire page. <span style='color: red;border-bottom: 1px dotted red;' title='This feature is in development.'>(Indev)</span></small></span>",
+        name: "Invert Color Scheme<br/><span><small>Inverts colors of entire page. <span style='color: red;border-bottom: 1px dotted red;' title='This feature is in development.'>(Indev)</span></small></span>",
         isHtmlName: true,
         icon: function (opt, $itemElement, itemKey, item) {
           if (document.getElementById("dm_invertScheme")) {
@@ -745,27 +742,64 @@ function getCookie(cname) {
           return false; // Do not close the menu after clicking an item
         },
       },
+      // enableModernFont: {
+      //   name:
+      //     "Toggle Modern Font<br/><span><small>Inverts colors of entire page. <span style='color: red;border-bottom: 1px dotted red;' title='This feature is in development.'>(Indev)</span></small></span>",
+      //   isHtmlName: true,
+      //   icon: function (opt, $itemElement, itemKey, item) {
+      //     if (document.getElementById("dm_modernFont")) {
+      //       $itemElement.html(
+      //         '<i class="fa fa-toggle-on" aria-hidden="true"></i> ' + item.name
+      //       );
+      //       // return "fa-toggle-on";
+      //     } else {
+      //       $itemElement.html(
+      //         '<i class="fa fa-toggle-off" aria-hidden="true"></i> ' + item.name
+      //       );
+      //       // return "fa-toggle-off";
+      //     }
+      //   },
+      //   callback: function () {
+      //     toggleModernFont();
+      //     return false; // Do not close the menu after clicking an item
+      //   },
+      // },
       enableModernFont: {
-        name:
-          "Toggle Modern Font<br/><span><small>Inverts colors of entire page. <span style='color: red;border-bottom: 1px dotted red;' title='This feature is in development.'>(Indev)</span></small></span>",
+        name: "Toggle Modern Font<br/><span><small>Inverts colors of entire page. <span style='color: red;border-bottom: 1px dotted red;' title='This feature is in development.'>(Indev)</span></small></span>",
         isHtmlName: true,
-        icon: function (opt, $itemElement, itemKey, item) {
-          if (document.getElementById("dm_modernFont")) {
-            $itemElement.html(
-              '<i class="fa fa-toggle-on" aria-hidden="true"></i> ' + item.name
-            );
-            // return "fa-toggle-on";
-          } else {
-            $itemElement.html(
-              '<i class="fa fa-toggle-off" aria-hidden="true"></i> ' + item.name
-            );
-            // return "fa-toggle-off";
-          }
+        type: "select",
+        options: {
+          1: 'Default - Normal',
+          2: 'Poppins - Round, Clean, Chic',
         },
-        callback: function () {
-          toggleModernFont();
-          return false; // Do not close the menu after clicking an item
-        },
+        selected: 1,
+        // icon: function (opt, $itemElement, itemKey, item) {
+        //   if (document.getElementById("dm_modernFont")) {
+        //     $itemElement.html(
+        //       '<i class="fa fa-toggle-on" aria-hidden="true"></i> ' + item.name
+        //     );
+        //     // return "fa-toggle-on";
+        //   } else {
+        //     $itemElement.html(
+        //       '<i class="fa fa-toggle-off" aria-hidden="true"></i> ' + item.name
+        //     );
+        //     // return "fa-toggle-off";
+        //   }
+        // },
+        icon: "fa-font",
+        events: {
+          change: function (e) {
+            console.log(e.data);
+            console.log(e.data.$selected);
+            // console.log(e.data.$trigger.value());
+            console.log(e.data.$trigger.attr('value'));
+            console.log(e.data.$trigger.attr('selected'));
+            // Log function data
+            // Enhanced.log(`itemKey: ${itemKey}; opt: ${opt}; e: ${e}`);
+            // toggleModernFont();
+            return false; // Do not close the menu after clicking an item
+          },
+        }
       },
       credits: {
         name: "<small>MVNU Moodle Enhanced™ created by Jason F.</small>",
