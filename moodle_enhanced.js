@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MVNU Moodle Enhanced™
 // @namespace    https://onyxsimple.com
-// @version      0.6.1
+// @version      0.6.2
 // @description  Provides a variety of enhancements to the MVNU Moodle experience.
 // @author       Jason Fraley (Z8MB1E)
 // @license      All Rights Reserved
@@ -91,13 +91,20 @@ function getCookie(cname) {
 
       this.toastDelay = function (
         delay = 30,
+        id,
         text,
         icon = "info",
         hideAfter = 5000
       ) {
-        Enhanced.log(
-          `A new toast message has been set to appear after a ${delay} second delay.`
-        );
+        if (id) {
+          Enhanced.log(
+            `A new toast message with ID "${id}" has been set to appear after a ${delay} second delay.`
+          );
+        } else {
+          Enhanced.log(
+            `A new toast message has been set to appear after a ${delay} second delay.`
+          );
+        }
         var delayedToast = setTimeout(function () {
           Enhanced.toast(text, icon, hideAfter);
         }, delay * 1000);
@@ -662,6 +669,7 @@ function getCookie(cname) {
   Enhanced.chance(10, function () {
     Enhanced.toastDelay(
       Math.round(Math.random() * 60) + 30,
+      "issue",
       "Discovered an issue with this add-on? Report it on our <a href='https://github.com/Z8MB1E/MVNU-Moodle-Enhanced/issues' target='_blank'>issue tracker!</a>",
       "info",
       15000
@@ -674,9 +682,10 @@ function getCookie(cname) {
    *               SHARE WITH FRIENDS
    *---------------------------------------------**/
 
-  Enhanced.chance(25, function() {
+  Enhanced.chance(25, function () {
     Enhanced.toastDelay(
       Math.round(Math.random() * 60) + 30,
+      "share",
       `Like what I've made? Please share it with your friends!
       <ul>
       <a href="https://www.facebook.com/sharer/sharer.php?u=https://greasyfork.org/en/scripts/422185-mvnu-moodle-enhanced" target="_blank"><li>Share on Facebook</li></a>
@@ -685,8 +694,8 @@ function getCookie(cname) {
       </ul>`,
       "info",
       15000
-    )
-  })
+    );
+  });
 
   /*--------------- END OF SHARE WITH FRIENDS --------------*/
 
