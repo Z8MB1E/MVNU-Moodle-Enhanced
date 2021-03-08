@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MVNU Moodle Enhanced™
 // @namespace    https://onyxsimple.com
-// @version      0.5.11
+// @version      0.6.0
 // @description  Provides a variety of enhancements to the MVNU Moodle experience.
 // @author       Jason Fraley (Z8MB1E)
 // @license      All Rights Reserved
@@ -423,11 +423,13 @@ function getCookie(cname) {
   // }
 
   // Auto-click on sidebar element to remove issue
-  //todo  REFACTOR THIS FEATURE, NEEDS WORK 
+  //todo  REFACTOR THIS FEATURE, NEEDS WORK
   setTimeout(function () {
     if ($("a.list-group-item.activity-sections.active")) {
       // $("a.list-group-item.activity-sections.active").click();
-      document.getElementsByClassName("list-group-item activity-sections active")[0].click(); // Raw Javascript function
+      document
+        .getElementsByClassName("list-group-item activity-sections active")[0]
+        .click(); // Raw Javascript function
       Enhanced.log("Clicking on sidebar element. (Hopefully removes bug!)");
     } else {
       Enhanced.warn("Sidebar element not found!");
@@ -657,7 +659,7 @@ function getCookie(cname) {
    *               REPORT AN ISSUE
    *---------------------------------------------**/
 
-  Enhanced.chance(25, function () {
+  Enhanced.chance(10, function () {
     Enhanced.toastDelay(
       Math.round(Math.random() * 60) + 30,
       "Discovered an issue with this add-on? Report it on our <a href='https://github.com/Z8MB1E/MVNU-Moodle-Enhanced/issues' target='_blank'>issue tracker!</a>",
@@ -667,6 +669,26 @@ function getCookie(cname) {
   });
 
   /*--------------- END OF REPORT AN ISSUE --------------*/
+
+  /**--------------------------------------------
+   *               SHARE WITH FRIENDS
+   *---------------------------------------------**/
+
+  Enhanced.chance(25, function() {
+    Enhanced.toastDelay(
+      Math.round(Math.random() * 60) + 30,
+      `Like what I've made? Please share it with your friends!
+      <ul>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https://greasyfork.org/en/scripts/422185-mvnu-moodle-enhanced"><li>Share on Facebook</li></a>
+      <a href="https://twitter.com/intent/tweet?url=https://greasyfork.org/en/scripts/422185-mvnu-moodle-enhanced&text=Hey%20MVNU%20students!%20I've%20been%20using%20this%20really%20cool%20add-on%20for%20Moodle%20that%20adds%20Dark%20Mode.%20Give%20it%20a%20try!"><li>Share on Twitter</li></a>
+      <a href="https://pinterest.com/pin/create/button/?url=https://greasyfork.org/en/scripts/422185-mvnu-moodle-enhanced&media=&description=Hey%20MVNU%20students!%20I've%20been%20using%20this%20really%20cool%20add-on%20for%20Moodle%20that%20adds%20Dark%20Mode.%20Give%20it%20a%20try!"><li>Share on Pinterest</li></a>
+      </ul>`,
+      "info",
+      15000
+    )
+  })
+
+  /*--------------- END OF SHARE WITH FRIENDS --------------*/
 
   // Add context menu
   $.contextMenu({
