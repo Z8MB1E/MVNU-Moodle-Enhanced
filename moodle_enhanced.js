@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MVNU Moodle Enhanced™
 // @namespace    https://onyxsimple.com
-// @version      0.6.2
+// @version      0.7.0
 // @description  Provides a variety of enhancements to the MVNU Moodle experience.
 // @author       Jason Fraley (Z8MB1E)
 // @license      All Rights Reserved
@@ -375,6 +375,14 @@ function getCookie(cname) {
         -webkit-box-shadow: none;
         box-shadow: none;
     }
+    [data-region="blocks-column"] {
+        background: #212529;
+    }
+    table.quizreviewsummary th.cell, table.quizreviewsummary td.cell {
+        background: #212529;
+        color: white !important;
+        border-color: #263238;
+    }
     `;
 
   var style = `    
@@ -616,6 +624,30 @@ function getCookie(cname) {
     `Checking options: ${whiteText}, ${inversionMode}, ${modernFont}`
   );
 
+  var definitionLayer = getCookie("enhanced_definitionLayer") == "true" ? true : false;
+
+  if (definitionLayer) toggleDefinitionLayer(false);
+
+  function toggleDefinitionLayer() {
+    if (document.getElementById("enh_disableDefinitionLayer")) {
+      document.getElementById("enh_disableDefinitionLayer").remove();
+      if (log) Enhanced.toast("Enabled the definition pop-up.", "warning");
+      setCookie("enhanced_definitionLayer", "false");
+    } else {
+      var enh_definitionLayer = document.createElement("style");
+      enh_definitionLayer.id = "enh_disableDefinitionLayer";
+      enh_definitionLayer.innerHTML = `
+      div#definition_layer {
+          display: none!important;
+      }
+      `;
+      document.body.appendChild(enh_definitionLayer);
+      if (log) Enhanced.toast("Disabled the definition pop-up.", "info");
+      setCookie("enhanced_definitionLayer", "true");
+      // return;
+    }
+  }
+
   /*---------- END OF ADDITIONAL FEATURES -------*/
 
   /**--------------------------------------------
@@ -630,7 +662,7 @@ function getCookie(cname) {
     var notify = setTimeout(function () {
       window.notifyToast = $.toast({
         text:
-          "MVNU Moodle Enhanced&trade; is under constant development. Would you be so kind as to <a href='https://greasyfork.org/en/scripts/422185-mvnu-moodle-enhanced/feedback' onclick='return window.wentToReview();' target='_blank'>leave some feedback?</a>",
+          "MVNU Moodle Enhanced&trade; is under constant development. Would you be so kind as to <a href='https://github.com/Z8MB1E/MVNU-Moodle-Enhanced/discussions' onclick='return window.wentToReview();' target='_blank'>leave some feedback?</a>",
         heading: "Leave a comment!",
         icon: "warning",
         allowToastClose: true,
@@ -765,6 +797,27 @@ function getCookie(cname) {
         callback: function () {
           toggleModernFont();
           return false; // Do not close the menu after clicking an item
+        },
+      },
+      sep1: "---------",
+      disableDefinitions: {
+        name: "Disable Definition Box",
+        icon: function (opt, $itemElement, itemKey, item) {
+          if (document.getElementById("enh_disableDefinitionLayer")) {
+            $itemElement.html(
+              '<i class="fa fa-toggle-on" aria-hidden="true"></i> ' + item.name
+            );
+            // return "fa-toggle-on";
+          } else {
+            $itemElement.html(
+              '<i class="fa fa-toggle-off" aria-hidden="true"></i> ' + item.name
+            );
+            // return "fa-toggle-off";
+          }
+        },
+        callback: function () {
+          toggleDefinitionLayer();
+          return false;
         },
       },
       credits: {
