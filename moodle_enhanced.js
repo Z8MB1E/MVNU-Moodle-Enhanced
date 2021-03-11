@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MVNU Moodle Enhanced™
 // @namespace    https://onyxsimple.com
-// @version      0.7.0
+// @version      0.7.1
 // @description  Provides a variety of enhancements to the MVNU Moodle experience.
 // @author       Jason Fraley (Z8MB1E)
 // @license      All Rights Reserved
@@ -628,7 +628,7 @@ function getCookie(cname) {
 
   if (definitionLayer) toggleDefinitionLayer(false);
 
-  function toggleDefinitionLayer() {
+  function toggleDefinitionLayer(log = true) {
     if (document.getElementById("enh_disableDefinitionLayer")) {
       document.getElementById("enh_disableDefinitionLayer").remove();
       if (log) Enhanced.toast("Enabled the definition pop-up.", "warning");
@@ -801,7 +801,8 @@ function getCookie(cname) {
       },
       sep1: "---------",
       disableDefinitions: {
-        name: "Disable Definition Box",
+        name: "Disable Definition Box<br/><small>Removes the definition pop-up that appears when selecting text.</small>",
+        isHtmlName: true,
         icon: function (opt, $itemElement, itemKey, item) {
           if (document.getElementById("enh_disableDefinitionLayer")) {
             $itemElement.html(
