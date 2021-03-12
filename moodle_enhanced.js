@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MVNU Moodle Enhanced™
 // @namespace    https://onyxsimple.com
-// @version      0.7.3
+// @version      0.7.4
 // @description  Provides a variety of enhancements to the MVNU Moodle experience.
 // @author       Jason Fraley (Z8MB1E)
 // @license      All Rights Reserved
@@ -382,6 +382,14 @@ function getCookie(cname) {
         background: #212529;
         color: white !important;
         border-color: #263238;
+    }
+    .block-timeline div[data-region=event-list-item] {
+        background: #263238!important;
+        border: 0!important;
+        border-radius: 5px;
+    }
+    .region_main_settings_menu_proxy {
+        background-color: #212529;
     }
     `;
 
