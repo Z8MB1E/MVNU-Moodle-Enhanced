@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MVNU Moodle Enhanced™
 // @namespace    https://onyxsimple.com
-// @version      0.8.0
+// @version      0.8.1
 // @description  Provides a variety of enhancements to the MVNU Moodle experience.
 // @author       Jason Fraley (Z8MB1E)
 // @license      All Rights Reserved
@@ -565,12 +565,12 @@ function getCookie(cname) {
       // return false; // Do not close the menu after clicking an item
     }
   }
-
+  
   var inversionMode =
-    getCookie("enhanced_inversionMode") == "true" ? true : false;
-
+  getCookie("enhanced_inversionMode") == "true" ? true : false;
+  
   if (inversionMode) toggleInversionMode(false);
-
+  
   function toggleInversionMode(log = true) {
     if (document.getElementById("dm_invertScheme")) {
       document.getElementById("dm_invertScheme").remove();
@@ -580,6 +580,8 @@ function getCookie(cname) {
       if (darkmode) {
         if (document.getElementById("dm_whiteText")) {
           document.getElementById("dm_whiteText").remove();
+          setCookie("enhanced_whiteText", "false");
+          if (log) Enhanced.toast("White text mode disabled.", "warning");
         }
         // toggleWhiteText(false);
         toggleDarkMode();
@@ -683,26 +685,34 @@ function getCookie(cname) {
     // }
     if (autoExtendSession) {
       autoExtendSession = false;
-      if (log) Enhanced.toast("No longer extending session; session can now expire!", "warn");
-      setCookie('enhanced_autoExtendSession', "false");
+      if (log)
+        Enhanced.toast(
+          "No longer extending session; session can now expire!",
+          "warn"
+        );
+      setCookie("enhanced_autoExtendSession", "false");
       _autoExtend = null;
     } else {
       var _autoExtend = setInterval(function () {
         if (
           $(".modal-dialog")
-          .children(".modal-content")
-          .children(".modal-body")
-          .text() ==
+            .children(".modal-content")
+            .children(".modal-body")
+            .text() ==
           "Your session is about to time out. Do you want to extend your current session?"
-          ) {
-            $(".modal-dialog")
+        ) {
+          $(".modal-dialog")
             .children(".modal-content")
             .children(".modal-footer")
             .children("button[data-action='save']")
             .click();
-            Enhanced.log("Automatically extending session!");
-          }
-        if (log) Enhanced.toast("Automatically extending session! Your session should no longer expire.", "info");
+          Enhanced.log("Automatically extending session!");
+        }
+        if (log)
+          Enhanced.toast(
+            "Automatically extending session! Your session should no longer expire.",
+            "info"
+          );
       }, 5900);
     }
   }
