@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MVNU Moodle Enhanced™
 // @namespace    https://onyxsimple.com
-// @version      0.7.4
+// @version      0.8.0
 // @description  Provides a variety of enhancements to the MVNU Moodle experience.
 // @author       Jason Fraley (Z8MB1E)
 // @license      All Rights Reserved
@@ -540,7 +540,7 @@ function getCookie(cname) {
   }
 
   /**--------------------------------------------
-   *               ADDITIONAL FEATURES
+   *         ANCHOR: ADDITIONAL FEATURES
    *---------------------------------------------**/
 
   var opt_whiteText = getCookie("enhanced_whiteText") == "true" ? true : false;
@@ -633,7 +633,8 @@ function getCookie(cname) {
     `Checking options: ${whiteText}, ${inversionMode}, ${modernFont}`
   );
 
-  var definitionLayer = getCookie("enhanced_definitionLayer") == "true" ? true : false;
+  var definitionLayer =
+    getCookie("enhanced_definitionLayer") == "true" ? true : false;
 
   if (definitionLayer) toggleDefinitionLayer(false);
 
@@ -647,13 +648,62 @@ function getCookie(cname) {
       enh_definitionLayer.id = "enh_disableDefinitionLayer";
       enh_definitionLayer.innerHTML = `
       div#definition_layer {
-          display: none!important;
+        display: none!important;
       }
       `;
       document.body.appendChild(enh_definitionLayer);
       if (log) Enhanced.toast("Disabled the definition pop-up.", "info");
       setCookie("enhanced_definitionLayer", "true");
       // return;
+    }
+  }
+
+  var autoExtendSession =
+    getCookie("enhanced_autoExtendSession") == "true" ? true : false;
+
+  if (autoExtendSession) toggleAutoExtendSession(false);
+
+  function toggleAutoExtendSession(log = true) {
+    // if (document.getElementById("enh_autoExtendSession")) {
+    //   document.getElementById("enh_autoExtendSession").remove();
+    //   if (log) Enhanced.toast("Enabled the definition pop-up.", "warning");
+    //   setCookie("enhanced_autoExtendSession", "false");
+    // } else {
+    //   var enh_autoExtendSession = document.createElement("script");
+    //   enh_autoExtendSession.id = "enh_disableDefinitionLayer";
+    //   enh_autoExtendSession.innerHTML = `
+    //   div#definition_layer {
+    //       display: none!important;
+    //   }
+    //   `;
+    //   document.body.appendChild(enh_autoExtendSession);
+    //   if (log) Enhanced.toast("Disabled the definition pop-up.", "info");
+    //   setCookie("enhanced_autoExtendSession", "true");
+    //   // return;
+    // }
+    if (autoExtendSession) {
+      autoExtendSession = false;
+      if (log) Enhanced.toast("No longer extending session; session can now expire!", "warn");
+      setCookie('enhanced_autoExtendSession', "false");
+      _autoExtend = null;
+    } else {
+      var _autoExtend = setInterval(function () {
+        if (
+          $(".modal-dialog")
+          .children(".modal-content")
+          .children(".modal-body")
+          .text() ==
+          "Your session is about to time out. Do you want to extend your current session?"
+          ) {
+            $(".modal-dialog")
+            .children(".modal-content")
+            .children(".modal-footer")
+            .children("button[data-action='save']")
+            .click();
+            Enhanced.log("Automatically extending session!");
+          }
+        if (log) Enhanced.toast("Automatically extending session! Your session should no longer expire.", "info");
+      }, 5900);
     }
   }
 
@@ -810,7 +860,8 @@ function getCookie(cname) {
       },
       sep1: "---------",
       disableDefinitions: {
-        name: "Disable Definition Box<br/><small>Removes the definition pop-up that appears when selecting text.</small>",
+        name:
+          "Disable Definition Box<br/><small>Removes the definition pop-up that appears when selecting text.</small>",
         isHtmlName: true,
         icon: function (opt, $itemElement, itemKey, item) {
           if (document.getElementById("enh_disableDefinitionLayer")) {
@@ -827,6 +878,28 @@ function getCookie(cname) {
         },
         callback: function () {
           toggleDefinitionLayer();
+          return false;
+        },
+      },
+      autoExtendSession: {
+        name:
+          "Auto Extend Session<br/><small>Automatically prevents your Moodle session from timing out.</small>",
+        isHtmlName: true,
+        icon: function (opt, $itemElement, itemKey, item) {
+          if (autoExtendSession) {
+            $itemElement.html(
+              '<i class="fa fa-toggle-on" aria-hidden="true"></i> ' + item.name
+            );
+            // return "fa-toggle-on";
+          } else {
+            $itemElement.html(
+              '<i class="fa fa-toggle-off" aria-hidden="true"></i> ' + item.name
+            );
+            // return "fa-toggle-off";
+          }
+        },
+        callback: function () {
+          toggleAutoExtendSession();
           return false;
         },
       },
