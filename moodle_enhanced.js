@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MVNU Moodle Enhanced™
 // @namespace    https://onyxsimple.com
-// @version      0.8.1
+// @version      0.8.3
 // @description  Provides a variety of enhancements to the MVNU Moodle experience.
 // @author       Jason Fraley (Z8MB1E)
 // @license      All Rights Reserved
@@ -565,12 +565,12 @@ function getCookie(cname) {
       // return false; // Do not close the menu after clicking an item
     }
   }
-  
+
   var inversionMode =
-  getCookie("enhanced_inversionMode") == "true" ? true : false;
-  
+    getCookie("enhanced_inversionMode") == "true" ? true : false;
+
   if (inversionMode) toggleInversionMode(false);
-  
+
   function toggleInversionMode(log = true) {
     if (document.getElementById("dm_invertScheme")) {
       document.getElementById("dm_invertScheme").remove();
@@ -663,29 +663,16 @@ function getCookie(cname) {
   var autoExtendSession =
     getCookie("enhanced_autoExtendSession") == "true" ? true : false;
 
-  if (autoExtendSession) toggleAutoExtendSession(false);
+  if (autoExtendSession) toggleAutoExtendSession(false, true);
 
-  function toggleAutoExtendSession(log = true) {
-    // if (document.getElementById("enh_autoExtendSession")) {
-    //   document.getElementById("enh_autoExtendSession").remove();
-    //   if (log) Enhanced.toast("Enabled the definition pop-up.", "warning");
-    //   setCookie("enhanced_autoExtendSession", "false");
-    // } else {
-    //   var enh_autoExtendSession = document.createElement("script");
-    //   enh_autoExtendSession.id = "enh_disableDefinitionLayer";
-    //   enh_autoExtendSession.innerHTML = `
-    //   div#definition_layer {
-    //       display: none!important;
-    //   }
-    //   `;
-    //   document.body.appendChild(enh_autoExtendSession);
-    //   if (log) Enhanced.toast("Disabled the definition pop-up.", "info");
-    //   setCookie("enhanced_autoExtendSession", "true");
-    //   // return;
-    // }
-    if (autoExtendSession) {
-      autoExtendSession = false;
-      if (log)
+  var extendingSession = autoExtendSession;
+
+  function toggleAutoExtendSession(log = true, verbose = false) {
+    if (verbose)
+      Enhanced.log("Cookie evaluated to true for toggleAutoExtendSession");
+    if (extendingSession) {
+      extendingSession = false;
+      if (log || verbose)
         Enhanced.toast(
           "No longer extending session; session can now expire!",
           "warn"
@@ -693,7 +680,10 @@ function getCookie(cname) {
       setCookie("enhanced_autoExtendSession", "false");
       _autoExtend = null;
     } else {
+      extendingSession = true;
       var _autoExtend = setInterval(function () {
+        if (verbose)
+          Enhanced.log("Running interval check for extension modal...");
         if (
           $(".modal-dialog")
             .children(".modal-content")
@@ -701,19 +691,26 @@ function getCookie(cname) {
             .text() ==
           "Your session is about to time out. Do you want to extend your current session?"
         ) {
+          if (verbose) Enhanced.log("Found extension modal!");
           $(".modal-dialog")
             .children(".modal-content")
             .children(".modal-footer")
             .children("button[data-action='save']")
             .click();
           Enhanced.log("Automatically extending session!");
+          if (log || verbose)
+            Enhanced.toast(
+              "Automatically extending session! Your session should no longer expire.",
+              "info"
+            );
+        } else {
+          if (verbose)
+            Enhanced.log(
+              "Extension modal not found! Trying again in 59 seconds..."
+            );
         }
-        if (log)
-          Enhanced.toast(
-            "Automatically extending session! Your session should no longer expire.",
-            "info"
-          );
-      }, 5900);
+      }, 59 * 1000);
+      setCookie("enhanced_autoExtendSession", "true");
     }
   }
 
@@ -893,7 +890,7 @@ function getCookie(cname) {
       },
       autoExtendSession: {
         name:
-          "Auto Extend Session<br/><small>Automatically prevents your Moodle session from timing out.</small>",
+          "Auto Extend Session<br/><small>Automatically prevents your Moodle session from timing out. <span style='color: red;border-bottom: 1px dotted red;' title='This feature is in development.'>(Indev)</span></small>",
         isHtmlName: true,
         icon: function (opt, $itemElement, itemKey, item) {
           if (autoExtendSession) {
@@ -909,7 +906,7 @@ function getCookie(cname) {
           }
         },
         callback: function () {
-          toggleAutoExtendSession();
+          toggleAutoExtendSession(true, true);
           return false;
         },
       },
