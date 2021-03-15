@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MVNU Moodle Enhanced™
 // @namespace    https://onyxsimple.com
-// @version      0.8.3
+// @version      0.8.4
 // @description  Provides a variety of enhancements to the MVNU Moodle experience.
 // @author       Jason Fraley (Z8MB1E)
 // @license      All Rights Reserved
@@ -422,7 +422,7 @@ function getCookie(cname) {
     Enhanced.log("CSS styling successfully injected!");
   }
 
-  Enhanced.log("Unlocking any available editor tools...");
+  Enhanced.log("Automatically revealing advanced editor tools...");
   setTimeout(function () {
     var textEditTools = document.getElementsByClassName("atto_group");
     if (textEditTools.length > 0) {
@@ -431,13 +431,13 @@ function getCookie(cname) {
         element.removeAttribute("hidden");
         element.removeAttribute("style");
       }
-
-      Enhanced.log("Unlocked editor tools!");
-      Enhanced.toast("Unlocked editor tools!", "success");
+ 
+      Enhanced.log("Revealed editor tools!");
+      Enhanced.toast("Revealed editor tools!", "success");
 
       // fixEditorIssues();
     } else {
-      Enhanced.log("Editor tools were not detected.");
+      Enhanced.log("Editor tools were not revealed.");
     }
   }, 3000);
 
