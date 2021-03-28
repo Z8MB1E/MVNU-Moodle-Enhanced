@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MVNU Moodle Enhanced™
 // @namespace    https://onyxsimple.com
-// @version      0.8.5
+// @version      0.8.7
 // @description  Provides a variety of enhancements to the MVNU Moodle experience.
 // @author       Jason Fraley (Z8MB1E)
 // @license      All Rights Reserved
@@ -393,6 +393,13 @@ function getCookie(cname) {
     .region_main_settings_menu_proxy {
         background-color: #212529;
     }
+    .table thead th, .table th {
+        border-top: 1px solid #526069;
+    }
+    .table td {
+      /* border-top: 0; */
+        border-top: 1px solid #526069;
+    }
     `;
 
   var style = `    
@@ -521,9 +528,25 @@ function getCookie(cname) {
     )[0]
     .insertAdjacentElement("afterbegin", darkModeBtn);
 
-  document.getElementById("toggleDarkMode").onclick = function () {
-    toggleDarkMode();
-  };
+  // document.getElementById("toggleDarkMode").onclick = function () {
+  //   toggleDarkMode();
+  // };
+
+  // Allow for debugging option with Ctrl-Shift-Click
+  $("#toggleDarkMode").on("click", function (e) {
+    if (e.shiftKey && e.ctrlKey) {
+      e.preventDefault();
+      if (!Enhanced.debug) {
+        Enhanced.debug = true;
+        Enhanced.toast("Debug mode is enabled!", "error");
+      } else {
+        Enhanced.debug = false;
+        Enhanced.toast("Debug mode is disabled!", "success");
+      }
+    } else {
+      toggleDarkMode();
+    }
+  });
 
   // Add options for context menu
   // - White text forced -
@@ -799,6 +822,37 @@ function getCookie(cname) {
 
   /*--------------- END OF SHARE WITH FRIENDS --------------*/
 
+  /**--------------------------------------------
+   *         REMOVE IDENTIFYING FEATURES
+   *---------------------------------------------**/
+  function removeIdentifyingFeatures() {
+    $("div.wdm-course-card-body a").each(function () {
+      $(this).text("EXAMPLE CLASS");
+    });
+    $("div.wdm-course-card-body span.categoryname").each(function () {
+      $(this).text("XYZ");
+    });
+    $("div.dashboard-card-img").each(function () {
+      $(this).css({
+        "background-image": "none",
+        background: "lightgrey",
+      });
+    });
+    $(".username").text("Example User");
+    $("a[data-type='event']").each(function () {
+      $(this).text("Assignment (XYZ) is due");
+    });
+    $("div.logininfo a:nth-child(1)").text("Example User");
+    $("div.author-info div:nth-child(1)").each(function () {
+      $(this).text("Example User");
+    });
+    $("th.topic div a").each(function () {
+      $(this).text("Example Article");
+    });
+  }
+
+  /*--------------- END OF REMOVE IDENTIFYING FEATURES --------------*/
+
   // Add context menu
   $.contextMenu({
     selector: "#toggleDarkMode",
@@ -916,37 +970,12 @@ function getCookie(cname) {
       // DEBUG FEATURES
       removeIdentifyingFeatures: {
         name: "[DEBUG] Remove Identifying Features",
-        icon: function (opt, $itemElement, itemKey, item) {
-          if (autoExtendSession) {
-            $itemElement.html(
-              '<i class="fa fa-toggle-on" aria-hidden="true"></i> ' + item.name
-            );
-            // return "fa-toggle-on";
-          } else {
-            $itemElement.html(
-              '<i class="fa fa-toggle-off" aria-hidden="true"></i> ' + item.name
-            );
-            // return "fa-toggle-off";
-          }
+        visible: function () {
+          return Enhanced.debug;
         },
+        icon: "fa-eye-slash",
         callback: function () {
-          $("div.wdm-course-card-body a").each(function () {
-            $(this).text("EXAMPLE CLASS");
-          });
-          $("div.wdm-course-card-body span.categoryname").each(function () {
-            $(this).text("XYZ");
-          });
-          $("div.dashboard-card-img").each(function () {
-            $(this).css({
-              "background-image": "none",
-              background: "lightgrey",
-            });
-          });
-          $(".username").text("Example User");
-          $("a[data-type='event']").each(function () {
-            $(this).text("Assignment (XYZ) is due");
-          });
-          $("div.logininfo a:nth-child(1)").text("Example User");
+          removeIdentifyingFeatures();
           return false;
         },
       },
