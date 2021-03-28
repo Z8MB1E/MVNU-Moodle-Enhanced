@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MVNU Moodle Enhanced™
 // @namespace    https://onyxsimple.com
-// @version      0.8.4
+// @version      0.8.5
 // @description  Provides a variety of enhancements to the MVNU Moodle experience.
 // @author       Jason Fraley (Z8MB1E)
 // @license      All Rights Reserved
@@ -53,6 +53,8 @@ function getCookie(cname) {
 
   class EnhancedClass {
     constructor() {
+      this.debug = false;
+
       this.log = function (msg) {
         console.log(`[Enhanced] ${msg}`);
       };
@@ -431,7 +433,7 @@ function getCookie(cname) {
         element.removeAttribute("hidden");
         element.removeAttribute("style");
       }
- 
+
       Enhanced.log("Revealed editor tools!");
       Enhanced.toast("Revealed editor tools!", "success");
 
@@ -910,6 +912,45 @@ function getCookie(cname) {
           return false;
         },
       },
+
+      // DEBUG FEATURES
+      removeIdentifyingFeatures: {
+        name: "[DEBUG] Remove Identifying Features",
+        icon: function (opt, $itemElement, itemKey, item) {
+          if (autoExtendSession) {
+            $itemElement.html(
+              '<i class="fa fa-toggle-on" aria-hidden="true"></i> ' + item.name
+            );
+            // return "fa-toggle-on";
+          } else {
+            $itemElement.html(
+              '<i class="fa fa-toggle-off" aria-hidden="true"></i> ' + item.name
+            );
+            // return "fa-toggle-off";
+          }
+        },
+        callback: function () {
+          $("div.wdm-course-card-body a").each(function () {
+            $(this).text("EXAMPLE CLASS");
+          });
+          $("div.wdm-course-card-body span.categoryname").each(function () {
+            $(this).text("XYZ");
+          });
+          $("div.dashboard-card-img").each(function () {
+            $(this).css({
+              "background-image": "none",
+              background: "lightgrey",
+            });
+          });
+          $(".username").text("Example User");
+          $("a[data-type='event']").each(function () {
+            $(this).text("Assignment (XYZ) is due");
+          });
+          $("div.logininfo a:nth-child(1)").text("Example User");
+          return false;
+        },
+      },
+      // END DEBUG FEATURES
       credits: {
         name: "<small>MVNU Moodle Enhanced™ created by Jason F.</small>",
         isHtmlName: true,
